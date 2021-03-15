@@ -1,10 +1,7 @@
 package startspring2.com.example.cookpage.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import startspring2.com.example.cookpage.model.Recipe;
 
 import java.util.ArrayList;
@@ -15,12 +12,55 @@ import java.util.List;
 public class RecipeController {
 
     private List<Recipe> recipes = new ArrayList<>();
+    private int counter = 0;
 
     @RequestMapping(method = RequestMethod.GET, value = "/v1/chat")
     @ResponseBody
-    public String showAllRecipes() {
-        return recipes.toString();
+    public List<Recipe> showRecipes(@RequestParam(required = false) String name) {
+        if (name != null) {
+            List<Recipe> lookingForRecipes = new ArrayList<>();
+            for (Recipe recipe : recipes) {
+                if (recipe.getName().equals(name)) {
+                    lookingForRecipes.add(recipe);
+                }
+            }
+            return lookingForRecipes;
+        }
+        return recipes;
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "v1/chat")
+    @ResponseBody
+    public Recipe addNewRecipe(@RequestBody Recipe recipe) {
+        recipe.setId(counter++);
+        recipes.add(recipe);
+        return recipe;
+    }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "v1/chat")
+    @ResponseBody
+    public Recipe changeRecipe(@RequestBody Recipe recipe, @PathVariable int id) {
+        for (Recipe changeRecipe: recipes) {
+            if (changeRecipe.getId() == id) {
+                changeRecipe.setName(recipe.getName());
+                changeRecipe.setTime(recipe.getTime());
+                changeRecipe.setLevel(recipe.getLevel());
+                changeRecipe.setIngredients(recipe.getIngredients());
+                changeRecipe.setContent(recipe.getContent());
+            }
+            return changeRecipe;
+        }
+        return null;
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "vi/chat")
+    @ResponseBody
+    public Recipe deleteRecipe(@PathVariable int id) {
+        for (Recipe deleteRecipe : recipes) {
+            if (deleteRecipe.getId() == id) {
+                return recipes.remove(id);
+            }
+        }
+        return null;
+    }
 }
