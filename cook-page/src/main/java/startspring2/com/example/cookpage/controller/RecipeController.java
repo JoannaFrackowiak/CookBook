@@ -45,8 +45,8 @@ public class RecipeController {
                 changeRecipe.setName(recipe.getName());
                 changeRecipe.setTime(recipe.getTime());
                 changeRecipe.setLevel(recipe.getLevel());
-                changeRecipe.setIngredients(recipe.getIngredients());
-                changeRecipe.setContent(recipe.getContent());
+                changeRecipe.setDetails(recipe.getDetails());
+                changeRecipe.setAmountOfIngredients(recipe.getAmountOfIngredients());
             }
             return changeRecipe;
         }

@@ -15,10 +15,10 @@ public class Recipe {
     private int id;
     private String name;
     private int time;
-    private String level;
-    private String type;
-    private List<Ingredient> ingredients = new ArrayList<>();
-    private String content;
+    private RecipeLevel level;
+    private TypesOfRecipes type;
+    private String details;
 
+    private List<AmoutOfIngredients> amountOfIngredients = new ArrayList<>();
 
 }
