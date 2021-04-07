@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +20,9 @@ public class Recipe {
     private TypesOfRecipes type;
     private String details;
 
-    private List<AmoutOfIngredients> amountOfIngredients = new ArrayList<>();
+//    private List<AmoutOfIngredients> amountOfIngredients = new ArrayList<>();
+
+
+
 
 }

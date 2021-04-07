@@ -1,6 +1,5 @@
 package startspring2.com.example.cookpage.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import startspring2.com.example.cookpage.model.Recipe;
 
@@ -14,7 +13,7 @@ public class RecipeController {
     private List<Recipe> recipes = new ArrayList<>();
     private int counter = 0;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/v1/chat")
+    @RequestMapping(method = RequestMethod.GET, value = "/recipes")
     @ResponseBody
     public List<Recipe> showRecipes(@RequestParam(required = false) String name) {
         if (name != null) {
@@ -29,7 +28,7 @@ public class RecipeController {
         return recipes;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "v1/chat")
+    @RequestMapping(method = RequestMethod.POST, value = "/recipes")
     @ResponseBody
     public Recipe addNewRecipe(@RequestBody Recipe recipe) {
         recipe.setId(counter++);
@@ -37,7 +36,7 @@ public class RecipeController {
         return recipe;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "v1/chat")
+    @RequestMapping(method = RequestMethod.PUT, value = "recipes/{id}")
     @ResponseBody
     public Recipe changeRecipe(@RequestBody Recipe recipe, @PathVariable int id) {
         for (Recipe changeRecipe: recipes) {
@@ -46,14 +45,14 @@ public class RecipeController {
                 changeRecipe.setTime(recipe.getTime());
                 changeRecipe.setLevel(recipe.getLevel());
                 changeRecipe.setDetails(recipe.getDetails());
-                changeRecipe.setAmountOfIngredients(recipe.getAmountOfIngredients());
+//                changeRecipe.setAmountOfIngredients(recipe.getAmountOfIngredients());
             }
             return changeRecipe;
         }
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "vi/chat")
+    @RequestMapping(method = RequestMethod.DELETE, value = "recipe/{id}")
     @ResponseBody
     public Recipe deleteRecipe(@PathVariable int id) {
         for (Recipe deleteRecipe : recipes) {

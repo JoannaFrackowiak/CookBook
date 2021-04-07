@@ -17,5 +17,5 @@ public class Ingredient {
     private TypesOfIngredients type;
     private String description;
 
-    private List<AmoutOfIngredients> recipesWithIngredients;
+//    private List<AmoutOfIngredients> recipesWithIngredients;
 }
