@@ -1,13 +1,15 @@
-package startspring2.com.example.cookpage.model;
+package startspring2.com.example.cookpage.service.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class TypesOfIngredients {
+@AllArgsConstructor
+@Builder
+public class TypesOfRecipesDto {
 
     private Integer id;
     private String name;

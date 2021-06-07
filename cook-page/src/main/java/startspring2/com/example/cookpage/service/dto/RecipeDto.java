@@ -1,28 +1,25 @@
-package startspring2.com.example.cookpage.model;
+package startspring2.com.example.cookpage.service.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import startspring2.com.example.cookpage.model.RecipeLevel;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recipe {
+@Builder
+public class RecipeDto {
 
     private Integer id;
     private String name;
     private Integer time;
     private RecipeLevel level;
-    private TypesOfRecipes type;
+    private Integer typesOfRecipesId;
     private String details;
-
-    private List<AmountOfIngredients> amountOfIngredients;
-
-
-
+    private List<Integer> amountOfIngredientsId;
 
 }

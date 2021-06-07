@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AmoutOfIngredients {
+public class AmountOfIngredients {
 
-    private int id;
+    private Integer id;
     private Ingredient ingredient;
     private Recipe recipe;
-    private int amount;
+    private Integer amount;
 
 }

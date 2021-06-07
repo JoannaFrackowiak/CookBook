@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TypesOfRecipes {
 
-    private int id;
+    private Integer id;
     private String name;
 }

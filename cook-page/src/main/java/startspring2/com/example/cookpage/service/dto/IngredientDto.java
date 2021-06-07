@@ -1,10 +1,9 @@
-package startspring2.com.example.cookpage.model;
+package startspring2.com.example.cookpage.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.List;
 
@@ -12,13 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-public class Ingredient {
+public class IngredientDto {
 
     private Integer id;
     private String name;
-    private TypesOfIngredients type;
+    private Integer typesOfIngredientsId;
     private String description;
-
-    private List<AmountOfIngredients> recipesWithIngredients;
+    private List<Integer> amountOfIngredientsId;
 }
