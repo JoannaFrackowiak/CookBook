@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import startspring2.com.example.cookpage.model.Unit;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class IngredientDto {
 
     private Integer id;
     private String name;
+    private Unit unit;
     private Integer typesOfIngredientsId;
     private String description;
-    private List<Integer> amountOfIngredientsId;
 }
