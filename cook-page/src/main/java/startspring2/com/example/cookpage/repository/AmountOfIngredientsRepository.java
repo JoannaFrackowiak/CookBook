@@ -10,4 +10,5 @@ import java.util.List;
 public interface AmountOfIngredientsRepository extends JpaRepository<AmountOfIngredients, List<Integer>> {
 
     List<AmountOfIngredients> findAllByRecipeId(Integer id);
+    AmountOfIngredients findAmountOfIngredientsById(Integer id);
 }

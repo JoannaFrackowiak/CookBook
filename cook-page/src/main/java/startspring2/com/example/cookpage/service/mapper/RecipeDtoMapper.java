@@ -2,14 +2,11 @@ package startspring2.com.example.cookpage.service.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.model.AmountOfIngredients;
 import startspring2.com.example.cookpage.model.Recipe;
 import startspring2.com.example.cookpage.model.TypesOfRecipes;
-import startspring2.com.example.cookpage.repository.AmountOfIngredientsRepository;
 import startspring2.com.example.cookpage.repository.TypesOfRecipesRepository;
-import startspring2.com.example.cookpage.service.AmountOfIngredientsService;
 import startspring2.com.example.cookpage.service.dto.CreateUpdateRecipeDto;
 import startspring2.com.example.cookpage.service.dto.RecipeDto;
 
@@ -24,12 +21,12 @@ public class RecipeDtoMapper {
 
     public RecipeDto toDto(Recipe recipe) {
 
-        List<Integer> amountOfIngredientsId = new ArrayList<>();
-
-        for (AmountOfIngredients amountAndIngredient : recipe.getAmountOfIngredients()) {
-            Integer amountAndIngredientId = amountAndIngredient.getId();
-            amountOfIngredientsId.add(amountAndIngredientId);
-        }
+//        List<Integer> amountOfIngredientsId = new ArrayList<>();
+//
+//        for (AmountOfIngredients amountAndIngredient : recipe.getAmountOfIngredients()) {
+//            Integer amountAndIngredientId = amountAndIngredient.getId();
+//            amountOfIngredientsId.add(amountAndIngredientId);
+//        }
 
         Integer typesOfRecipesId = recipe.getType().getId();
 
@@ -39,8 +36,8 @@ public class RecipeDtoMapper {
                 .level(recipe.getLevel())
                 .name(recipe.getName())
                 .details(recipe.getDetails())
-                .amountOfIngredientsId(amountOfIngredientsId)
-                .typesOfRecipesId(typesOfRecipesId)
+//                .amountOfIngredientsId(amountOfIngredientsId)
+                .typeOfRecipeId(typesOfRecipesId)
                 .build();
     }
 

@@ -6,4 +6,6 @@ import startspring2.com.example.cookpage.model.TypesOfRecipes;
 
 @Repository
 public interface TypesOfRecipesRepository extends JpaRepository<TypesOfRecipes, Integer> {
+
+    TypesOfRecipes findTypesOfRecipesById(Integer id);
 }

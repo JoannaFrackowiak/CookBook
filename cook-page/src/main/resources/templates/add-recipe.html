@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add recipe</title>
+</head>
+<body>
+<h1>Add a new recipe</h1>
+
+<form action="#" th:action="@{/new-recipe}" th:object="${createUpdateRecipeDto}" method="post">
+    Name:
+    <input type="text" th:field="*{name}"/>
+    <br/>
+    Type:
+<!--    <input type="text" th:field="*{typesOfRecipesId}" list="typesList">-->
+<!--    <datalist id="typesList">-->
+<!--        <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe:${typesList}" th:text="${typesOfRecipe.name}"></option>-->
+<!--    </datalist>-->
+    <select th:field="*{typesOfRecipesId}">
+        <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe: ${typesList}" th:text="${typesOfRecipe.name}"></option>
+    </select>
+    <br/>
+    Level:
+    <select name="level" th:field="*{level}">
+        <option th:each="level : ${T(startspring2.com.example.cookpage.model.RecipeLevel).values()}"
+                th:value="${level}" th:text="${level}"></option>
+    </select>
+    <br/>
+    Time:
+    <input type="text" th:field="*{time}"/>
+    <br/>
+    Ingredients:
+<!--    <input type="text" th:field="*{ingredientsWithAmount}"/>-->
+<!--    <br/>-->
+    Details:
+    <input type="text" th:field="*{details}"/>
+    <br/>
+
+    <input type="submit" value="submit"/>
+</form>
+</body>
+</html>

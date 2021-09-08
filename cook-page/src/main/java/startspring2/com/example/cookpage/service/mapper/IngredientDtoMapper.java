@@ -15,7 +15,7 @@ public class IngredientDtoMapper {
                 .id(ingredient.getId())
                 .name(ingredient.getName())
                 .unit(ingredient.getUnit())
-                .typesOfIngredientsId(typesOfIngredientsId)
+                .typeOfIngredientId(typesOfIngredientsId)
                 .description(ingredient.getDescription())
                 .build();
     }

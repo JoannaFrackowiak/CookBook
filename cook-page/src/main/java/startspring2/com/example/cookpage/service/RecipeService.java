@@ -32,8 +32,6 @@ public class RecipeService {
     @Autowired
     private AmountOfIngredientsService amountOfIngredientsService;
     @Autowired
-    private AmountOfIngredientsRepository amountOfIngredientsRepository;
-    @Autowired
     private TypesOfRecipesRepository typesOfRecipesRepository;
     @Autowired
     private AmountOfIngredientsDtoMapper amountOfIngredientsDtoMapper;
@@ -60,6 +58,11 @@ public class RecipeService {
             throw new NotFoundException();
         }
         return lookingForRecipeDto;
+    }
+
+    @Transactional
+    public RecipeDto showRecipeById(@PathVariable Integer id) throws NotFoundException {
+        return recipeDtoMapper.toDto(recipeRepository.findById(id).orElseThrow(() -> new NotFoundException()));
     }
 
     @Transactional

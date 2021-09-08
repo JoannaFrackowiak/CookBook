@@ -18,7 +18,7 @@ public class RecipeDto {
     private String name;
     private Integer time;
     private RecipeLevel level;
-    private Integer typesOfRecipesId;
+    private Integer typeOfRecipeId;
     private String details;
     private List<Integer> amountOfIngredientsId;
 
