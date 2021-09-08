@@ -21,12 +21,12 @@ public class RecipeDtoMapper {
 
     public RecipeDto toDto(Recipe recipe) {
 
-//        List<Integer> amountOfIngredientsId = new ArrayList<>();
-//
-//        for (AmountOfIngredients amountAndIngredient : recipe.getAmountOfIngredients()) {
-//            Integer amountAndIngredientId = amountAndIngredient.getId();
-//            amountOfIngredientsId.add(amountAndIngredientId);
-//        }
+        List<Integer> amountOfIngredientsId = new ArrayList<>();
+
+        for (AmountOfIngredients amountAndIngredient : recipe.getAmountOfIngredients()) {
+            Integer amountAndIngredientId = amountAndIngredient.getId();
+            amountOfIngredientsId.add(amountAndIngredientId);
+        }
 
         Integer typesOfRecipesId = recipe.getType().getId();
 
@@ -36,7 +36,7 @@ public class RecipeDtoMapper {
                 .level(recipe.getLevel())
                 .name(recipe.getName())
                 .details(recipe.getDetails())
-//                .amountOfIngredientsId(amountOfIngredientsId)
+                .amountOfIngredientsId(amountOfIngredientsId)
                 .typeOfRecipeId(typesOfRecipesId)
                 .build();
     }

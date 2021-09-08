@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
 import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.controller.exception.NotFoundException;
+import startspring2.com.example.cookpage.service.AmountOfIngredientsService;
 import startspring2.com.example.cookpage.service.IngredientService;
 import startspring2.com.example.cookpage.service.RecipeService;
 import startspring2.com.example.cookpage.service.TypesOfRecipesService;
@@ -27,6 +28,8 @@ public class RecipeViewController {
     private IngredientService ingredientService;
     @Autowired
     private TypesOfRecipesService typesOfRecipesService;
+    @Autowired
+    private AmountOfIngredientsService amountOfIngredientsService;
 
     @GetMapping("/all-recipes")
     public ModelAndView recipeList() {

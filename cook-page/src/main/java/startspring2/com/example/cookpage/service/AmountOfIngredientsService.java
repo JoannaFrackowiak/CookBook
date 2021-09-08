@@ -40,22 +40,19 @@ public class AmountOfIngredientsService {
     }
 
     @Transactional
-    public List<AmountOfIngredientsDto> newAmountOfIngredients(Integer recipeId, Map<IngredientDto, Integer> ingredientMap) {
-
+    public List<AmountOfIngredientsDto> newAmountOfIngredients(Integer recipeId, List<AmountOfIngredientsDto> ingredientsDtoList) {
         Recipe recipe = recipeRepository.getOne(recipeId);
-        List<AmountOfIngredientsDto> amount = new ArrayList<>();
-        Set<Map.Entry<IngredientDto, Integer>> ingredients = ingredientMap.entrySet();
-        for (Map.Entry<IngredientDto, Integer> ingredient : ingredients) {
+        for (AmountOfIngredientsDto amountOfIngredientsDto : ingredientsDtoList) {
             AmountOfIngredients amountOfIngredients = AmountOfIngredients.builder()
                     .recipe(recipe)
-                    .amount(ingredient.getValue())
-                    .ingredientId(ingredient.getKey().getId())
+                    .amount(amountOfIngredientsDto.getAmount())
+                    .ingredientId(amountOfIngredientsDto.getIngredientId())
                     .build();
             AmountOfIngredients saved = amountOfIngredientsRepository.save(amountOfIngredients);
-            AmountOfIngredientsDto amountOfIngredientsDto = amountOfIngredientsDtoMapper.toDto(saved);
-            amount.add(amountOfIngredientsDto);
+//            AmountOfIngredientsDto savedDto = amountOfIngredientsDtoMapper.toDto(saved);
+//            amount.add(savedDto);
         }
-        return amount;
+        return ingredientsDtoList;
     }
 
     @Transactional

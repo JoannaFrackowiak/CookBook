@@ -22,6 +22,5 @@ public class CreateUpdateRecipeDto {
     private RecipeLevel level;
     private Integer typesOfRecipesId;
     private String details;
-    private Map<IngredientDto, Integer> ingredientsWithAmount = new HashMap<>();
-    //Is IngredientDto right? Maybe only name ingredient as String?
+    private List<AmountOfIngredientsDto> ingredientsWithAmount = new ArrayList<>();
 }
