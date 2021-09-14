@@ -1,0 +1,44 @@
+[33m6f768f7[m[33m ([m[1;36mHEAD -> [m[1;32madd_exception[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33m6f768f7[m[33m ([m[1;36mHEAD -> [m[1;32madd_exception[m[33m)[m HEAD@{1}: commit: add dto, mapper and service
+[33m7875df3[m[33m ([m[1;31morigin/add_exception[m[33m)[m HEAD@{2}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{3}: checkout: moving from add_exception to master
+[33m7875df3[m[33m ([m[1;31morigin/add_exception[m[33m)[m HEAD@{4}: commit: add exceptions
+[33m24ecfce[m HEAD@{5}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{6}: checkout: moving from add_exception to master
+[33m24ecfce[m HEAD@{7}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{8}: checkout: moving from add_exception to master
+[33m24ecfce[m HEAD@{9}: commit: added classes with exceptions
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{10}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{11}: checkout: moving from add_exception to master
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{12}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{13}: checkout: moving from add_exception to master
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{14}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{15}: reset: moving to HEAD
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{16}: checkout: moving from add_exception to master
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{17}: reset: moving to HEAD
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{18}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{19}: checkout: moving from add_exception to master
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{20}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{21}: checkout: moving from add_exception to master
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{22}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{23}: checkout: moving from add_exception to master
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{24}: checkout: moving from master to add_exception
+[33m185b95a[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{25}: commit: next models and controllers
+[33mebf6c0b[m HEAD@{26}: commit: add Lombok to model
+[33mf196439[m HEAD@{27}: commit: complement to the controller
+[33m143ce3d[m HEAD@{28}: commit: test2 update README
+[33m55a2299[m HEAD@{29}: pull: Fast-forward
+[33m238d3d7[m HEAD@{30}: checkout: moving from controllers1 to master
+[33mc60dff6[m HEAD@{31}: checkout: moving from master to controllers1
+[33m238d3d7[m HEAD@{32}: checkout: moving from controllers1 to master
+[33mc60dff6[m HEAD@{33}: checkout: moving from master to controllers1
+[33m238d3d7[m HEAD@{34}: commit (merge): merge
+[33mc60dff6[m HEAD@{35}: merge controllers1: Fast-forward
+[33m47f326d[m HEAD@{36}: checkout: moving from controllers1 to master
+[33mc60dff6[m HEAD@{37}: commit: test test
+[33mc32a9a0[m HEAD@{38}: commit: save again
+[33m9a1dbd5[m HEAD@{39}: reset: moving to HEAD
+[33m9a1dbd5[m HEAD@{40}: commit: add model and controller
+[33m47f326d[m HEAD@{41}: checkout: moving from master to controllers1
+[33m47f326d[m HEAD@{42}: checkout: moving from master to master
+[33m47f326d[m HEAD@{43}: commit (initial): First Commit

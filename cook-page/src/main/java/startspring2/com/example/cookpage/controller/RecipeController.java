@@ -1,66 +1,49 @@
 package startspring2.com.example.cookpage.controller;
 
-import org.springframework.stereotype.Controller;
+import io.swagger.models.auth.In;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
+import startspring2.com.example.cookpage.controller.exception.BadRequestException;
+import startspring2.com.example.cookpage.controller.exception.NotFoundException;
 import startspring2.com.example.cookpage.model.Recipe;
+import startspring2.com.example.cookpage.service.RecipeService;
+import startspring2.com.example.cookpage.service.dto.CreateUpdateRecipeDto;
+import startspring2.com.example.cookpage.service.dto.RecipeDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
+@RequestMapping("api/v1/recipes")
 public class RecipeController {
 
-    private List<Recipe> recipes = new ArrayList<>();
-    private int counter = 0;
+    @Autowired
+    private RecipeService recipeService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/v1/chat")
-    @ResponseBody
-    public List<Recipe> showRecipes(@RequestParam(required = false) String name) {
-        if (name != null) {
-            List<Recipe> lookingForRecipes = new ArrayList<>();
-            for (Recipe recipe : recipes) {
-                if (recipe.getName().equals(name)) {
-                    lookingForRecipes.add(recipe);
-                }
-            }
-            return lookingForRecipes;
-        }
-        return recipes;
+    @GetMapping
+    public List<RecipeDto> showAllRecipes() {
+        return recipeService.showAllRecipes();
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "v1/chat")
-    @ResponseBody
-    public Recipe addNewRecipe(@RequestBody Recipe recipe) {
-        recipe.setId(counter++);
-        recipes.add(recipe);
-        return recipe;
+    //add search by type, time and level
+    @GetMapping("/{name}")
+    public RecipeDto showRecipeByName(@PathVariable String name) throws NotFoundException{
+        return recipeService.showRecipeByName(name);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "v1/chat")
-    @ResponseBody
-    public Recipe changeRecipe(@RequestBody Recipe recipe, @PathVariable int id) {
-        for (Recipe changeRecipe: recipes) {
-            if (changeRecipe.getId() == id) {
-                changeRecipe.setName(recipe.getName());
-                changeRecipe.setTime(recipe.getTime());
-                changeRecipe.setLevel(recipe.getLevel());
-                changeRecipe.setDetails(recipe.getDetails());
-                changeRecipe.setAmountOfIngredients(recipe.getAmountOfIngredients());
-            }
-            return changeRecipe;
-        }
-        return null;
+    @PostMapping
+    public RecipeDto addNewRecipe(@RequestBody CreateUpdateRecipeDto recipe) throws AlreadyExistsException, BadRequestException {
+        return recipeService.addNewRecipe(recipe);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "vi/chat")
-    @ResponseBody
-    public Recipe deleteRecipe(@PathVariable int id) {
-        for (Recipe deleteRecipe : recipes) {
-            if (deleteRecipe.getId() == id) {
-                return recipes.remove(id);
-            }
-        }
-        return null;
+    @PutMapping("/{id}")
+    public RecipeDto updateRecipe(@RequestBody CreateUpdateRecipeDto recipe, @PathVariable Integer id) throws NotFoundException {
+        return recipeService.updateRecipe(recipe, id);
     }
+
+   @DeleteMapping("/{id}")
+    public RecipeDto deleteRecipe(@PathVariable int id) throws NotFoundException {
+       return recipeService.deleteRecipe(id);
+   }
 }
