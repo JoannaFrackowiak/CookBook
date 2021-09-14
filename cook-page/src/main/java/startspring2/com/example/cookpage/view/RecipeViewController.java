@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
 import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.controller.exception.NotFoundException;
+import startspring2.com.example.cookpage.repository.RecipeRepository;
 import startspring2.com.example.cookpage.service.AmountOfIngredientsService;
 import startspring2.com.example.cookpage.service.IngredientService;
 import startspring2.com.example.cookpage.service.RecipeService;
@@ -30,6 +31,8 @@ public class RecipeViewController {
     private TypesOfRecipesService typesOfRecipesService;
     @Autowired
     private AmountOfIngredientsService amountOfIngredientsService;
+    @Autowired
+    private RecipeRepository recipeRepository;
 
     @GetMapping("/all-recipes")
     public ModelAndView recipeList() {
@@ -57,14 +60,16 @@ public class RecipeViewController {
         CreateUpdateRecipeDto createUpdateRecipeDto = new CreateUpdateRecipeDto();
         modelAndView.addObject("createUpdateRecipeDto", createUpdateRecipeDto);
         modelAndView.addObject("typesList", typesOfRecipesService.getAllTypes());
+
+        for (int i = 0; i < 3; i++) {
+            createUpdateRecipeDto.addAmount(new AmountOfIngredientsDto());
+        }
         return modelAndView;
     }
 
     @PostMapping("/new-recipe")
     public String createRecipe(@ModelAttribute CreateUpdateRecipeDto createUpdateRecipeDto) throws AlreadyExistsException, BadRequestException {
-//        RecipeDto recipeDto =
-                recipeService.addNewRecipe(createUpdateRecipeDto);
-//        return "redirect:/the-recipe?id=" + recipeDto.getId();
-        return "redirect:/home-page";
+        RecipeDto recipeDto = recipeService.addNewRecipe(createUpdateRecipeDto);
+        return "redirect:/the-recipe?id=" + recipeDto.getId();
     }
 }

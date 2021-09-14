@@ -51,6 +51,7 @@ public class AmountOfIngredientsService {
             AmountOfIngredients saved = amountOfIngredientsRepository.save(amountOfIngredients);
 //            AmountOfIngredientsDto savedDto = amountOfIngredientsDtoMapper.toDto(saved);
 //            amount.add(savedDto);
+//            AmountOfIngredientsDto checkSave = savedDto;
         }
         return ingredientsDtoList;
     }

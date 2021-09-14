@@ -10,7 +10,6 @@ import startspring2.com.example.cookpage.controller.exception.NotFoundException;
 import startspring2.com.example.cookpage.model.AmountOfIngredients;
 import startspring2.com.example.cookpage.model.Recipe;
 import startspring2.com.example.cookpage.model.TypesOfRecipes;
-import startspring2.com.example.cookpage.repository.AmountOfIngredientsRepository;
 import startspring2.com.example.cookpage.repository.RecipeRepository;
 import startspring2.com.example.cookpage.repository.TypesOfRecipesRepository;
 import startspring2.com.example.cookpage.service.dto.AmountOfIngredientsDto;
@@ -75,8 +74,8 @@ public class RecipeService {
         }
         Recipe newRecipe = recipeDtoMapper.fromDto(recipe);
         Recipe savedRecipe = recipeRepository.save(newRecipe);
-        amountOfIngredientsService.newAmountOfIngredients(savedRecipe.getId(), recipe.getIngredientsWithAmount());
-        return recipeDtoMapper.toDto(savedRecipe);
+        List<AmountOfIngredientsDto> amountOfIngredientsDtoList = amountOfIngredientsService.newAmountOfIngredients(savedRecipe.getId(), recipe.getIngredientsWithAmount());
+        return recipeDtoMapper.toDto(savedRecipe, amountOfIngredientsDtoList);
 
     }
 

@@ -22,4 +22,5 @@ public class RecipeDto {
     private String details;
     private List<Integer> amountOfIngredientsId;
 
+
 }

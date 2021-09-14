@@ -23,4 +23,9 @@ public class CreateUpdateRecipeDto {
     private Integer typesOfRecipesId;
     private String details;
     private List<AmountOfIngredientsDto> ingredientsWithAmount = new ArrayList<>();
+
+    public void addAmount (AmountOfIngredientsDto amountDto) {
+        this.ingredientsWithAmount.add(amountDto);
+    }
+
 }

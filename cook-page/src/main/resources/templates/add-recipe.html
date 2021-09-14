@@ -30,6 +30,18 @@
     <input type="text" th:field="*{time}"/>
     <br/>
     Ingredients:
+    <table>
+        <tr>
+            <th>Amount</th>
+<!--            <th>Unit</th>-->
+            <th>Ingredient</th>
+        </tr>
+        <tr th:each="amountDto, itemStat : *{ingredientsWithAmount}">
+            <td><input th:field="*{ingredientsWithAmount[__${itemStat.index}__].amount}"/></td>
+<!--            <td><input th:field="*{ingredientsWithAmount[${itemStat.index}].id}"/></td>-->
+            <td><input th:field="*{ingredientsWithAmount[__${itemStat.index}__].ingredientId}"/></td>
+        </tr>
+    </table>
 <!--    <input type="text" th:field="*{ingredientsWithAmount}"/>-->
 <!--    <br/>-->
     Details:
