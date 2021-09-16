@@ -55,13 +55,13 @@ public class RecipeViewController {
     }
 
     @GetMapping("/new-recipe")
-    public ModelAndView displayCreateRecipe() {
+    public ModelAndView displayCreateRecipe(@RequestParam(name = "howMany") Integer quantity) {
         ModelAndView modelAndView = new ModelAndView("add-recipe");
         CreateUpdateRecipeDto createUpdateRecipeDto = new CreateUpdateRecipeDto();
         modelAndView.addObject("createUpdateRecipeDto", createUpdateRecipeDto);
         modelAndView.addObject("typesList", typesOfRecipesService.getAllTypes());
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < quantity; i++) {
             createUpdateRecipeDto.addAmount(new AmountOfIngredientsDto());
         }
         return modelAndView;
@@ -71,5 +71,18 @@ public class RecipeViewController {
     public String createRecipe(@ModelAttribute CreateUpdateRecipeDto createUpdateRecipeDto) throws AlreadyExistsException, BadRequestException {
         RecipeDto recipeDto = recipeService.addNewRecipe(createUpdateRecipeDto);
         return "redirect:/the-recipe?id=" + recipeDto.getId();
+    }
+
+    @GetMapping("/search")
+    public ModelAndView searchRecipe() {
+        ModelAndView modelAndView = new ModelAndView("search-recipe");
+        modelAndView.addObject("recipes", recipeService.showAllRecipes());
+        return modelAndView;
+    }
+
+    @GetMapping("/add-new-recipe")
+    public ModelAndView howManyIngredients() {
+        ModelAndView modelAndView = new ModelAndView("how-many-ingredients");
+        return modelAndView;
     }
 }
