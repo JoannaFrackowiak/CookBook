@@ -35,13 +35,33 @@ public class AmountOfIngredientsService {
     }
 
     @Transactional
-    public List<AmountOfIngredientsDto> getAmountByIngredient(Integer ingredientId) {
-        List<AmountOfIngredientsDto> amountDto = new ArrayList<>();
-        for (AmountOfIngredients amount : amountOfIngredientsRepository.findAmountOfIngredientsByIngredientId(ingredientId)) {
-            amountDto.add(amountOfIngredientsDtoMapper.toDto(amount));
+    public List<AmountOfIngredientsDto> getAmountByIngredient(Integer idA, Integer idB, Integer idC) {
+        List<AmountOfIngredients> amountA = amountOfIngredientsRepository.findAmountOfIngredientsByIngredientId(idA);
+        List<Recipe> recipeListA = new ArrayList<>();
+        List<AmountOfIngredientsDto> amountABC = new ArrayList<>();
+        List<Recipe> recipeIdListAB = new ArrayList<>();
+        for (AmountOfIngredients amount : amountA) {
+            recipeListA.add(amount.getRecipe());
         }
-        return amountDto;
+        for (Recipe recipeA : recipeListA) {
+            List<AmountOfIngredientsDto> amountRecipeA = amountForRecipe(recipeA.getId());
+            for (AmountOfIngredientsDto amountDtoA : amountRecipeA) {
+                if (amountDtoA.getIngredientId().equals(idB)) {
+                    recipeIdListAB.add(recipeA);
+                }
+            }
+        }
+        for (Recipe recipeAB : recipeIdListAB) {
+            List<AmountOfIngredientsDto> amountRecipeAB = amountForRecipe(recipeAB.getId());
+            for (AmountOfIngredientsDto amountDtoAB : amountRecipeAB) {
+                if (amountDtoAB.getIngredientId().equals(idC)) {
+                    amountABC.add(amountDtoAB);
+                }
+            }
+        }
+        return amountABC;
     }
+
 
     @Transactional
     public AmountOfIngredientsDto showAmountOfIngredient(Integer id) {

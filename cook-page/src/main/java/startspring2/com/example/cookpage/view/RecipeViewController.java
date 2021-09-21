@@ -57,9 +57,11 @@ public class RecipeViewController {
     }
 
     @GetMapping("/recipes-with-the-ingredient")
-    public ModelAndView recipeListByIngredient(@RequestParam(name = "ingredientId") Integer ingredientId) {
+    public ModelAndView recipeListByIngredient(@RequestParam(name = "ingredientIdA") Integer idA,
+                                               @RequestParam(name = "ingredientIdB", required = false) Integer idB,
+                                               @RequestParam(name = "ingredientIdC", required = false) Integer idC) {
         ModelAndView modelAndView = new ModelAndView("recipe-list");
-        modelAndView.addObject("recipeList", recipeService.showRecipeByIngredient(amountOfIngredientsService.getAmountByIngredient(ingredientId)));
+        modelAndView.addObject("recipeList", recipeService.showRecipeByIngredient(amountOfIngredientsService.getAmountByIngredient(idA, idB, idC)));
         return modelAndView;
     }
 
