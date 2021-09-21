@@ -35,6 +35,15 @@ public class AmountOfIngredientsService {
     }
 
     @Transactional
+    public List<AmountOfIngredientsDto> getAmountByIngredient(Integer ingredientId) {
+        List<AmountOfIngredientsDto> amountDto = new ArrayList<>();
+        for (AmountOfIngredients amount : amountOfIngredientsRepository.findAmountOfIngredientsByIngredientId(ingredientId)) {
+            amountDto.add(amountOfIngredientsDtoMapper.toDto(amount));
+        }
+        return amountDto;
+    }
+
+    @Transactional
     public AmountOfIngredientsDto showAmountOfIngredient(Integer id) {
         return amountOfIngredientsDtoMapper.toDto(amountOfIngredientsRepository.findAmountOfIngredientsById(id));
     }

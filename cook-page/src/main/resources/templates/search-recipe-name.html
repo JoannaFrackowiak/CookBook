@@ -7,20 +7,20 @@
 <body>
 <h1>Search:</h1>
 <form th:action="@{/the-recipe}">
-<!--    <label>-->
-<!--        Name:-->
-<!--        <select th:name="id">-->
-<!--            <option th:value="${recipe.id}" th:each="recipe:${recipes}" th:text="${recipe.name}"></option>-->
-<!--        </select>-->
-<!--    </label>-->
-
     <label>
         Name:
-        <input th:name="id" list="recipes">
-        <datalist id="recipes">
+        <select th:name="id">
             <option th:value="${recipe.id}" th:each="recipe:${recipes}" th:text="${recipe.name}"></option>
-        </datalist>
+        </select>
     </label>
+
+<!--    <label>-->
+<!--        Name:-->
+<!--        <input th:name="id" list="recipes">-->
+<!--        <datalist id="recipes">-->
+<!--            <option th:value="${recipe.id}" th:each="recipe:${recipes}" th:text="${recipe.name}"></option>-->
+<!--        </datalist>-->
+<!--    </label>-->
 
     <input type="submit" value="Search">
 </form>

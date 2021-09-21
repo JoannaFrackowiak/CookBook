@@ -1,5 +1,6 @@
 package startspring2.com.example.cookpage.view;
 
+import io.swagger.models.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,9 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
 import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.controller.exception.NotFoundException;
+import startspring2.com.example.cookpage.model.RecipeLevel;
 import startspring2.com.example.cookpage.repository.RecipeRepository;
 import startspring2.com.example.cookpage.service.AmountOfIngredientsService;
 import startspring2.com.example.cookpage.service.IngredientService;
@@ -17,6 +20,7 @@ import startspring2.com.example.cookpage.service.RecipeService;
 import startspring2.com.example.cookpage.service.TypesOfRecipesService;
 import startspring2.com.example.cookpage.service.dto.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,10 +39,27 @@ public class RecipeViewController {
     private RecipeRepository recipeRepository;
 
     @GetMapping("/all-recipes")
-    public ModelAndView recipeList() {
-        List<RecipeDto> recipeDtoList = recipeService.showAllRecipes();
+    public ModelAndView recipeList(@RequestParam(name = "levelRecipe", required = false) RecipeLevel level,
+                                   @RequestParam(name = "typeRecipe", required = false) String typeName,
+                                   @RequestParam(name = "timeRecipe", required = false) Integer time)
+            throws NotFoundException {
         ModelAndView modelAndView = new ModelAndView("recipe-list");
-        modelAndView.addObject("recipeList", recipeDtoList);
+        if (level != null) {
+            modelAndView.addObject("recipeList", recipeService.showRecipeByLevel(level));
+        } else if (typeName != null) {
+            modelAndView.addObject("recipeList", recipeService.showRecipeByType(typeName));
+        } else if (time != null) {
+            modelAndView.addObject("recipeList", recipeService.showRecipeByTime(time));
+        } else {
+            modelAndView.addObject("recipeList", recipeService.showAllRecipes());
+        }
+        return modelAndView;
+    }
+
+    @GetMapping("/recipes-with-the-ingredient")
+    public ModelAndView recipeListByIngredient(@RequestParam(name = "ingredientId") Integer ingredientId) {
+        ModelAndView modelAndView = new ModelAndView("recipe-list");
+        modelAndView.addObject("recipeList", recipeService.showRecipeByIngredient(amountOfIngredientsService.getAmountByIngredient(ingredientId)));
         return modelAndView;
     }
 
@@ -74,15 +95,45 @@ public class RecipeViewController {
     }
 
     @GetMapping("/search")
+    public String searchBy() {
+        return "search-by";
+    }
+
+    @GetMapping("/search-by-name")
     public ModelAndView searchRecipe() {
-        ModelAndView modelAndView = new ModelAndView("search-recipe");
+        ModelAndView modelAndView = new ModelAndView("search-recipe-name");
         modelAndView.addObject("recipes", recipeService.showAllRecipes());
         return modelAndView;
     }
 
-    @GetMapping("/add-new-recipe")
-    public ModelAndView howManyIngredients() {
-        ModelAndView modelAndView = new ModelAndView("how-many-ingredients");
+    @GetMapping("/search-by-ingredient")
+    public ModelAndView searchRecipeByIngredient() {
+        ModelAndView modelAndView = new ModelAndView("search-recipe-ingredient");
+        modelAndView.addObject("ingredients", ingredientService.showAllIngredients());
         return modelAndView;
+    }
+
+    @GetMapping("/search-by-level")
+    public ModelAndView searchRecipeByLevel() {
+        ModelAndView modelAndView = new ModelAndView("search-recipe-level");
+        modelAndView.addObject("levels", RecipeLevel.values());
+        return modelAndView;
+    }
+
+    @GetMapping("/search-by-type")
+    public ModelAndView searchRecipeByType() {
+        ModelAndView modelAndView = new ModelAndView("search-recipe-type");
+        modelAndView.addObject("types", typesOfRecipesService.getAllTypes());
+        return modelAndView;
+    }
+
+    @GetMapping("/search-by-time")
+    public String searchRecipeByTime() {
+        return "search-recipe-time";
+    }
+
+    @GetMapping("/add-new-recipe")
+    public String howManyIngredients() {
+        return "how-many-ingredients";
     }
 }

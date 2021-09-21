@@ -11,4 +11,5 @@ public interface AmountOfIngredientsRepository extends JpaRepository<AmountOfIng
 
     List<AmountOfIngredients> findAllByRecipeId(Integer id);
     AmountOfIngredients findAmountOfIngredientsById(Integer id);
+    List<AmountOfIngredients> findAmountOfIngredientsByIngredientId(Integer id);
 }

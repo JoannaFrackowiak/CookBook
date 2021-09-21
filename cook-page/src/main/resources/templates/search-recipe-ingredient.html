@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+<h1>Search</h1>
+<form th:action="@{/recipes-with-the-ingredient}">
+    <label>
+        Ingredient:
+        <input th:name="ingredientId" list="ingredients">
+        <datalist id="ingredients">
+            <option th:value="${ingredient.id}" th:each="ingredient:${ingredients}" th:text="${ingredient.name}"></option>
+        </datalist>
+    </label>
+    <input type="submit" value="Search">
+</form>
+
+</body>
+</html>
