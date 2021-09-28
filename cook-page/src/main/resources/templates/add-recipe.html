@@ -12,18 +12,19 @@
     <input type="text" th:field="*{name}"/>
     <br/>
     Type:
-<!--    <input type="text" th:field="*{typesOfRecipesId}" list="typesList">-->
-<!--    <datalist id="typesList">-->
-<!--        <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe:${typesList}" th:text="${typesOfRecipe.name}"></option>-->
-<!--    </datalist>-->
+<!--        <input type="text" th:field="*{typeOfRecipeId}" list="typesList">-->
+<!--        <datalist id="typesList">-->
+<!--            <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe:${typesList}" th:text="${typesOfRecipe.name}"></option>-->
+<!--        </datalist>-->
     <select th:field="*{typeOfRecipeId}">
-        <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe: ${typesList}" th:text="${typesOfRecipe.name}"></option>
+        <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe: ${typesList}"
+                th:text="${typesOfRecipe.name}"></option>
     </select>
     <br/>
     Level:
     <select name="level" th:field="*{level}">
-        <option th:each="level : ${T(startspring2.com.example.cookpage.model.RecipeLevel).values()}"
-                th:value="${level}" th:text="${level}"></option>
+        <option th:each="level : ${levels}"
+                th:value="${level}" th:text="${level.displayName}"></option>
     </select>
     <br/>
     Time:
@@ -33,20 +34,29 @@
     <table>
         <tr>
             <th>Amount</th>
-<!--            <th>Unit</th>-->
-            <th>Ingredient</th>
+            <th>Ingredient, Unit</th>
         </tr>
         <tr th:each="amountDto, itemStat : *{ingredientsWithAmount}">
-            <td><input th:field="*{ingredientsWithAmount[__${itemStat.index}__].amount}"/></td>
-<!--            <td><input th:field="*{ingredientsWithAmount[${itemStat.index}].id}"/></td>-->
-            <td><input th:field="*{ingredientsWithAmount[__${itemStat.index}__].ingredientId}"/></td>
+            <td>
+                <label>
+                    <input th:field="*{ingredientsWithAmount[__${itemStat.index}__].amount}"/>
+                </label>
+            </td>
+            <td>
+                <label>
+                    <select th:field="*{ingredientsWithAmount[__${itemStat.index}__].ingredientId}">
+                        <option th:value="${ingredient.id}" th:each="ingredient : ${ingredients}"
+                                th:text="${ingredient.name + ', ' + ingredient.unit.displayName}"></option>
+                    </select>
+                </label>
+            </td>
         </tr>
     </table>
-<!--    <input type="text" th:field="*{ingredientsWithAmount}"/>-->
-<!--    <br/>-->
-    Details:
-    <br/>
-    <textarea name="details" row="10" cols="30" th:field="*{details}"></textarea>
+    <label>
+        Details:
+        <br/>
+        <textarea name="details" rows="10" cols="30" th:field="*{details}"></textarea>
+    </label>
     <br/>
 
     <input type="submit" value="submit"/>

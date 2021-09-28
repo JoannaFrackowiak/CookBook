@@ -13,7 +13,7 @@
     <br/>
     Unit:
     <select name="unit" th:field="*{unit}">
-            <option th:each="unit : ${T(startspring2.com.example.cookpage.model.Unit).values()}"
+            <option th:each="unit : ${units}"
                     th:value="${unit}" th:text="${unit}"></option>
     </select>
     <br/>
@@ -23,7 +23,10 @@
     </select>
     <br/>
     Description:
-    <input type="text" th:field="*{description}"/>
+    <br/>
+    <label>
+        <textarea name="description" rows="5" cols="20" th:field="*{description}"></textarea>
+    </label>
     <br/>
 
     <input type="submit" value="submit"/>

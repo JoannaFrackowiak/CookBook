@@ -19,20 +19,21 @@
     <label>
         Type:
         <select th:field="*{typeOfRecipeId}">
-            <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe : ${typeRecipe}" th:text="${typesOfRecipe.name}"></option>
+            <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe : ${typeRecipe}"
+                    th:text="${typesOfRecipe.name}"></option>
         </select>
     </label>
     <br/>
     <label>
         Level:
         <select name="level" th:field="*{level}">
-            <option th:each="level : ${T(startspring2.com.example.cookpage.model.RecipeLevel).values()}"
-                    th:value="${level}" th:text="${level}"></option>
+            <option th:each="level : ${levels}"
+                    th:value="${level}" th:text="${level.displayName}"></option>
         </select>
     </label>
     <br/>
     <label>
-    Time:
+        Time:
         <input type="text" th:field="*{time}" name="time"/>
     </label>
     <br/>
@@ -41,13 +42,16 @@
         <table>
             <tr>
                 <th>Amount</th>
-<!--                <th>Unit</th>-->
-                <th>Ingredient</th>
+                <th>Unit    Ingredient</th>
             </tr>
             <tr th:each="amountDto, itemStat : *{ingredientsWithAmount}">
                 <td><input th:field="*{ingredientsWithAmount[__${itemStat.index}__].amount}"></td>
-<!--                <td><input th:field="${ingredientsWithAmount[__${itemStat.index}__].}"></td>-->
-                <td><input th:field="*{ingredientsWithAmount[__${itemStat.index}__].ingredientId}"></td>
+                <td>
+                    <select th:field="*{ingredientsWithAmount[__${itemStat.index}__].ingredientId}">
+                        <option th:value="${ingredient.id}" th:each="ingredient : ${ingredients}"
+                        th:text="${ingredient.unit.displayName + ', ' + ingredient.name}"></option>
+                    </select>
+                </td>
             </tr>
         </table>
     </label>

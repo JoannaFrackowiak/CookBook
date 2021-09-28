@@ -14,13 +14,13 @@ Time:
 <span th:text="${recipe.time}"></span>
 <br/>
 Level:
-<span th:text="${recipe.level}"></span>
+<span th:text="${recipe.level.displayName}"></span>
 <br/>
 <table>
     <tr>
-        <th>amount</th>
-        <th>unit</th>
-        <th>ingredient</th>
+        <th>Amount</th>
+        <th>Unit</th>
+        <th>Ingredient</th>
     </tr>
     <tr th:each="element : ${ingredients}">
         <td th:text="${element.value}"></td>
@@ -28,7 +28,7 @@ Level:
         <td th:text="${element.key.name}"></td>
     </tr>
 </table>
-
+<hr/>
 <span th:text="${recipe.details}"></span>
 <br/>
 

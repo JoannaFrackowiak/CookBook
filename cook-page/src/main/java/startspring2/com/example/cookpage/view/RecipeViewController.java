@@ -84,6 +84,8 @@ public class RecipeViewController {
         CreateUpdateRecipeDto createUpdateRecipeDto = new CreateUpdateRecipeDto();
         modelAndView.addObject("createUpdateRecipeDto", createUpdateRecipeDto);
         modelAndView.addObject("typesList", typesOfRecipesService.getAllTypes());
+        modelAndView.addObject("ingredients", ingredientService.showAllIngredients());
+        modelAndView.addObject("levels", RecipeLevel.values());
 
         for (int i = 0; i < quantity; i++) {
             createUpdateRecipeDto.addAmount(new AmountOfIngredientsDto());
@@ -102,7 +104,8 @@ public class RecipeViewController {
     ModelAndView modelAndView = new ModelAndView("update-recipe");
     modelAndView.addObject("typeRecipe", typesOfRecipesService.getAllTypes());
     RecipeDto recipe = recipeService.showRecipeById(id);
-//    modelAndView.addObject("recipe", recipe);
+    modelAndView.addObject("levels", RecipeLevel.values());
+    modelAndView.addObject("ingredients", ingredientService.showAllIngredients());
     modelAndView.addObject("updateRecipe",
             new CreateUpdateRecipeDto(recipe.getName(), recipe.getTime(), recipe.getLevel(),
                     recipe.getTypeOfRecipeId(), recipe.getDetails(), amountOfIngredientsService.amountForRecipe(id)));
@@ -115,6 +118,12 @@ public class RecipeViewController {
                                @RequestParam(name = "recipeId") Integer id) throws NotFoundException {
         RecipeDto recipeDto = recipeService.updateRecipe(createUpdateRecipeDto, id);
         return "redirect:/the-recipe?id=" + id;
+    }
+
+    @GetMapping("/delete-recipe")
+    public String deleteRecipe(@RequestParam(name = "recipeId") Integer id) throws NotFoundException {
+        recipeService.deleteRecipe(id);
+        return "redirect:/home-page";
     }
 
     @GetMapping("/search")
