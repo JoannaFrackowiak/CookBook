@@ -133,7 +133,7 @@ public class RecipeService {
         Recipe existingRecipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException());
 
-        TypesOfRecipes typesOfRecipes = typesOfRecipesRepository.findById(recipe.getTypesOfRecipesId())
+        TypesOfRecipes typesOfRecipes = typesOfRecipesRepository.findById(recipe.getTypeOfRecipeId())
                 .orElseThrow(() -> new NotFoundException());
 
         existingRecipe.setName(recipe.getName());
@@ -146,7 +146,7 @@ public class RecipeService {
         List<AmountOfIngredientsDto> newAmountDto = amountOfIngredientsService.newAmountOfIngredients(id, recipe.getIngredientsWithAmount());
         List<AmountOfIngredients> amountOfIngredients = new ArrayList<>();
         for (AmountOfIngredientsDto amountOfIngredientsDto : newAmountDto) {
-            amountOfIngredients.add(amountOfIngredientsDtoMapper.fromDto(amountOfIngredientsDto));
+            amountOfIngredients.add(amountOfIngredientsDtoMapper.fromDto(amountOfIngredientsDto, existingRecipe));
         }
 
         existingRecipe.setAmountOfIngredients(amountOfIngredients);

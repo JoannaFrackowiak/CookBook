@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndViewDefiningException;
 import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
 import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.controller.exception.NotFoundException;
+import startspring2.com.example.cookpage.model.Recipe;
 import startspring2.com.example.cookpage.model.RecipeLevel;
 import startspring2.com.example.cookpage.repository.RecipeRepository;
 import startspring2.com.example.cookpage.service.AmountOfIngredientsService;
@@ -59,7 +60,7 @@ public class RecipeViewController {
     @GetMapping("/recipes-with-the-ingredient")
     public ModelAndView recipeListByIngredient(@RequestParam(name = "ingredientIdA") Integer idA,
                                                @RequestParam(name = "ingredientIdB", required = false) Integer idB,
-                                               @RequestParam(name = "ingredientIdC", required = false) Integer idC) {
+                                               @RequestParam(name = "ingredientIdC", required = false) Integer idC) throws BadRequestException {
         ModelAndView modelAndView = new ModelAndView("recipe-list");
         modelAndView.addObject("recipeList", recipeService.showRecipeByIngredient(amountOfIngredientsService.getAmountByIngredient(idA, idB, idC)));
         return modelAndView;
@@ -94,6 +95,26 @@ public class RecipeViewController {
     public String createRecipe(@ModelAttribute CreateUpdateRecipeDto createUpdateRecipeDto) throws AlreadyExistsException, BadRequestException {
         RecipeDto recipeDto = recipeService.addNewRecipe(createUpdateRecipeDto);
         return "redirect:/the-recipe?id=" + recipeDto.getId();
+    }
+
+    @GetMapping("/edit-recipe")
+    public ModelAndView displayUpdateRecipe(@RequestParam(name = "recipeId") Integer id) throws NotFoundException {
+    ModelAndView modelAndView = new ModelAndView("update-recipe");
+    modelAndView.addObject("typeRecipe", typesOfRecipesService.getAllTypes());
+    RecipeDto recipe = recipeService.showRecipeById(id);
+//    modelAndView.addObject("recipe", recipe);
+    modelAndView.addObject("updateRecipe",
+            new CreateUpdateRecipeDto(recipe.getName(), recipe.getTime(), recipe.getLevel(),
+                    recipe.getTypeOfRecipeId(), recipe.getDetails(), amountOfIngredientsService.amountForRecipe(id)));
+    modelAndView.addObject("recipeId", id);
+    return modelAndView;
+    }
+
+    @PostMapping("/edit-recipe")
+    public String updateRecipe(@ModelAttribute CreateUpdateRecipeDto createUpdateRecipeDto,
+                               @RequestParam(name = "recipeId") Integer id) throws NotFoundException {
+        RecipeDto recipeDto = recipeService.updateRecipe(createUpdateRecipeDto, id);
+        return "redirect:/the-recipe?id=" + id;
     }
 
     @GetMapping("/search")

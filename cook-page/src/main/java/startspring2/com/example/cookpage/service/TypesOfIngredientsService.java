@@ -2,6 +2,7 @@ package startspring2.com.example.cookpage.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import startspring2.com.example.cookpage.model.TypesOfIngredients;
 import startspring2.com.example.cookpage.repository.TypesOfIngredientsRepository;
 import startspring2.com.example.cookpage.service.dto.TypesOfIngredientsDto;
@@ -18,6 +19,7 @@ public class TypesOfIngredientsService {
     @Autowired
     private TypesOfIngredientsDtoMapper typesOfIngredientsDtoMapper;
 
+    @Transactional
     public List<TypesOfIngredientsDto> getAllTypes() {
         List<TypesOfIngredients> types = typesOfIngredientsRepository.findAll();
         List<TypesOfIngredientsDto> typesDto = new ArrayList<>();
@@ -26,4 +28,5 @@ public class TypesOfIngredientsService {
         }
         return typesDto;
     }
+
 }

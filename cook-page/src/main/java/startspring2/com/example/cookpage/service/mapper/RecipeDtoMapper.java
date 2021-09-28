@@ -2,7 +2,6 @@ package startspring2.com.example.cookpage.service.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.model.AmountOfIngredients;
 import startspring2.com.example.cookpage.model.Recipe;
@@ -67,7 +66,7 @@ public class RecipeDtoMapper {
 
     public Recipe fromDto(CreateUpdateRecipeDto createUpdateRecipeDto) throws BadRequestException {
 
-        Integer idTypeOfRecipe = createUpdateRecipeDto.getTypesOfRecipesId();
+        Integer idTypeOfRecipe = createUpdateRecipeDto.getTypeOfRecipeId();
         TypesOfRecipes whatTypeOfRecipe = typesOfRecipesRepository.findById(idTypeOfRecipe).orElseThrow(() -> new BadRequestException());
 
         return Recipe.builder()

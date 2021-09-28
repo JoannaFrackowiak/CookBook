@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Recipe</title>
+</head>
+<body>
+<h1>Update: <span th:text="${updateRecipe.name}"></span></h1>
+
+<form action="#" th:action="@{/edit-recipe}" th:object="${updateRecipe}" method="post">
+    <label>
+        <input type="hidden" th:value="${recipeId}" name="recipeId"/>
+    </label>
+    <label>
+        Name:
+        <input type="text" th:field="*{name}" name="name"/>
+    </label>
+    <br/>
+    <label>
+        Type:
+        <select th:field="*{typeOfRecipeId}">
+            <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe : ${typeRecipe}" th:text="${typesOfRecipe.name}"></option>
+        </select>
+    </label>
+    <br/>
+    <label>
+        Level:
+        <select name="level" th:field="*{level}">
+            <option th:each="level : ${T(startspring2.com.example.cookpage.model.RecipeLevel).values()}"
+                    th:value="${level}" th:text="${level}"></option>
+        </select>
+    </label>
+    <br/>
+    <label>
+    Time:
+        <input type="text" th:field="*{time}" name="time"/>
+    </label>
+    <br/>
+    <label>
+        Ingredients:
+        <table>
+            <tr>
+                <th>Amount</th>
+<!--                <th>Unit</th>-->
+                <th>Ingredient</th>
+            </tr>
+            <tr th:each="amountDto, itemStat : *{ingredientsWithAmount}">
+                <td><input th:field="*{ingredientsWithAmount[__${itemStat.index}__].amount}"></td>
+<!--                <td><input th:field="${ingredientsWithAmount[__${itemStat.index}__].}"></td>-->
+                <td><input th:field="*{ingredientsWithAmount[__${itemStat.index}__].ingredientId}"></td>
+            </tr>
+        </table>
+    </label>
+    <br/>
+    <label>
+        Details:
+        <br/>
+        <textarea name="details" rows="10" cols="30" th:field="*{details}"></textarea>
+    </label>
+    <br/>
+    <input type="submit" value="submit"/>
+</form>
+
+</body>
+</html>
