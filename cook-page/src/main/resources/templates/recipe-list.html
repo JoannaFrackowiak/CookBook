@@ -8,6 +8,7 @@
 <h1> Recipes </h1>
 <ul th:each="recipe : ${recipeList}">
     <a th:href="'/the-recipe?id=' + ${recipe.id}"><li th:text="${recipe.name}"></li></a>
+    <a th:href="'/edit-recipe?recipeId=' + ${recipe.id}">Edit Recipe</a>
 </ul>
 
 

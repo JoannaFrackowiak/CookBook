@@ -3,6 +3,8 @@ package startspring2.com.example.cookpage.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
+import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.model.AmountOfIngredients;
 import startspring2.com.example.cookpage.model.Recipe;
 import startspring2.com.example.cookpage.repository.AmountOfIngredientsRepository;
@@ -33,6 +35,49 @@ public class AmountOfIngredientsService {
         }
         return amountsOfIngredientsDto;
     }
+
+    @Transactional
+    public List<AmountOfIngredientsDto> getAmountByIngredient(Integer idA, Integer idB, Integer idC) throws BadRequestException {
+        if (idA == null || idC != null && idB == null) {
+            throw new BadRequestException();
+        }
+        List<AmountOfIngredients> amountA = amountOfIngredientsRepository.findAmountOfIngredientsByIngredientId(idA);
+        List<Recipe> recipeListA = new ArrayList<>();
+        List<AmountOfIngredientsDto> amountABC = new ArrayList<>();
+        List<Recipe> recipeIdListAB = new ArrayList<>();
+        if (idB == null) {
+            for (AmountOfIngredients amount : amountA) {
+                amountABC.add(amountOfIngredientsDtoMapper.toDto(amount));
+            }
+//            return amountABC;
+        } else {
+            for (AmountOfIngredients amount : amountA) {
+                recipeListA.add(amount.getRecipe());
+            }
+            for (Recipe recipeA : recipeListA) {
+                List<AmountOfIngredientsDto> amountRecipeA = amountForRecipe(recipeA.getId());
+                for (AmountOfIngredientsDto amountDtoA : amountRecipeA) {
+                    if (amountDtoA.getIngredientId().equals(idB)) {
+                        recipeIdListAB.add(recipeA);
+                        amountABC.add(amountDtoA);
+                    }
+                }
+            }
+            if (idC != null) {
+                amountABC = new ArrayList<>();
+                for (Recipe recipeAB : recipeIdListAB) {
+                    List<AmountOfIngredientsDto> amountRecipeAB = amountForRecipe(recipeAB.getId());
+                    for (AmountOfIngredientsDto amountDtoAB : amountRecipeAB) {
+                        if (amountDtoAB.getIngredientId().equals(idC)) {
+                            amountABC.add(amountDtoAB);
+                        }
+                    }
+                }
+            }
+        }
+        return amountABC;
+    }
+
 
     @Transactional
     public AmountOfIngredientsDto showAmountOfIngredient(Integer id) {

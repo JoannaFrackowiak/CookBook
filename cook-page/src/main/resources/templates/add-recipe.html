@@ -16,7 +16,7 @@
 <!--    <datalist id="typesList">-->
 <!--        <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe:${typesList}" th:text="${typesOfRecipe.name}"></option>-->
 <!--    </datalist>-->
-    <select th:field="*{typesOfRecipesId}">
+    <select th:field="*{typeOfRecipeId}">
         <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe: ${typesList}" th:text="${typesOfRecipe.name}"></option>
     </select>
     <br/>
@@ -45,7 +45,8 @@
 <!--    <input type="text" th:field="*{ingredientsWithAmount}"/>-->
 <!--    <br/>-->
     Details:
-    <input type="text" th:field="*{details}"/>
+    <br/>
+    <textarea name="details" row="10" cols="30" th:field="*{details}"></textarea>
     <br/>
 
     <input type="submit" value="submit"/>

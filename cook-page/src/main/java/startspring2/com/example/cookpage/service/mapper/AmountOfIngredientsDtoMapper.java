@@ -25,9 +25,9 @@ public class AmountOfIngredientsDtoMapper {
                 .build();
     }
 
-    public AmountOfIngredients fromDto(AmountOfIngredientsDto amount) {
+    public AmountOfIngredients fromDto(AmountOfIngredientsDto amount, Recipe recipe) {
 
-        Recipe recipe = recipeRepository.getOne(amount.getRecipeId());
+//        Recipe recipe = recipeRepository.getOne(amount.getRecipeId());
 
         return AmountOfIngredients.builder()
                 .id(amount.getId())

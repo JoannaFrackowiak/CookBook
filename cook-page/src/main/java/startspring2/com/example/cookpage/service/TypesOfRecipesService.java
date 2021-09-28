@@ -34,4 +34,9 @@ public class TypesOfRecipesService {
         }
         return typesDto;
     }
+
+    @Transactional
+    public TypesOfRecipesDto getType(String name) {
+        return typesOfRecipesDtoMapper.toDto(typesOfRecipesRepository.findTypesOfRecipesByName(name));
+    }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingredients</title>
+</head>
+<body>
+<form th:action="@{/new-recipe}">
+    <label>
+        How many ingredients does your recipe have?
+        <br/>
+        <input type="text" th:name="howMany">
+        <br/>
+        Are you sure? Later you cannot change the answer.
+        <br/>
+    </label>
+    <input type="submit" value="Good, start add your recipe">
+</form>
+
+</body>
+</html>
