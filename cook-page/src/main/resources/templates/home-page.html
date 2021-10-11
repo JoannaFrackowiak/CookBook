@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>HomePage</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
-<a href="/all-recipes">Recipes list</a><br/>
-<a href="/search">Search for a recipe</a><br/>
-<a href="/add-new-recipe">Add a new recipe</a><br/>
-<a href="/add-ingredient">Add a new ingredient</a><br/>
+<div th:replace="layout :: header"></div>
+
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">Hi! It's a website with your recipes. You can add a new recipe or an ingredient which you use
+        in your kitchen. <br/> And you can also search your recipes by name, ingredients in it, time cooking, level of recipes
+        or its type. <br/> Have a nice cooking.</div>
+</div>
+<div th:replace="layout :: footer"></div>
+
+
 </body>
 </html>

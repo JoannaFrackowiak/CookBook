@@ -9,17 +9,17 @@
 <form th:action="@{/recipes-with-the-ingredient}">
     <label>
         Ingredient:
-        <input th:name="ingredientIdA" list="ingredientsA">
+        <input th:name="ingredientAName" list="ingredientsA">
         <datalist id="ingredientsA">
-            <option th:value="${ingredient.id}" th:each="ingredient:${ingredients}" th:text="${ingredient.name}"></option>
+            <option th:value="${ingredient.name}" th:each="ingredient:${ingredients}" th:text="${ingredient.name}"></option>
         </datalist>
-        <input th:name="ingredientIdB" list="ingredientsB">
+        <input th:name="ingredientBName" list="ingredientsB">
         <datalist id="ingredientsB">
-            <option th:value="${ingredient.id}" th:each="ingredient:${ingredients}" th:text="${ingredient.name}"></option>
+            <option th:value="${ingredient.name}" th:each="ingredient:${ingredients}" th:text="${ingredient.name}"></option>
         </datalist>
-        <input th:name="ingredientIdC" list="ingredientsC">
+        <input th:name="ingredientCName" list="ingredientsC">
         <datalist id="ingredientsC">
-            <option th:value="${ingredient.id}" th:each="ingredient:${ingredients}" th:text="${ingredient.name}"></option>
+            <option th:value="${ingredient.name}" th:each="ingredient:${ingredients}" th:text="${ingredient.name}"></option>
         </datalist>
     </label>
     <input type="submit" value="Search">

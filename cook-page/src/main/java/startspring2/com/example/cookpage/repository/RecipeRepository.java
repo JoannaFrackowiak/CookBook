@@ -11,8 +11,16 @@ import java.util.List;
 public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 
     List<Recipe> findRecipesByLevel(RecipeLevel level);
-    List<Recipe> findRecipesByType_Id(Integer id);
-    List<Recipe> findRecipesByTimeLessThan(Integer time);
+    List<Recipe> findRecipesByType_Name(String name);
+    List<Recipe> findRecipesByTimeIsLessThanEqual(Integer time);
+    List<Recipe> findRecipesByTimeIsGreaterThanEqual(Integer time);
+    List<Recipe> findRecipesByLevelAndTimeIsLessThanEqual(RecipeLevel level, Integer time);
+    List<Recipe> findRecipesByLevelAndTimeIsGreaterThanEqual(RecipeLevel level, Integer time);
+    List<Recipe> findRecipesByType_NameAndLevel(String typeName, RecipeLevel level);
+    List<Recipe> findRecipesByType_NameAndTimeIsGreaterThanEqual(String typeName, Integer time);
+    List<Recipe> findRecipesByType_NameAndTimeIsLessThanEqual(String typeName, Integer time);
+    List<Recipe> findRecipesByLevelAndType_NameAndTimeIsLessThanEqual(RecipeLevel level, String typeName, Integer time);
+    List<Recipe> findRecipesByLevelAndType_NameAndTimeIsGreaterThanEqual(RecipeLevel level, String typeName, Integer time);
 
 
 }

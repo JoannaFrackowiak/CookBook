@@ -8,6 +8,7 @@ import startspring2.com.example.cookpage.controller.exception.BadRequestExceptio
 import startspring2.com.example.cookpage.model.AmountOfIngredients;
 import startspring2.com.example.cookpage.model.Recipe;
 import startspring2.com.example.cookpage.repository.AmountOfIngredientsRepository;
+import startspring2.com.example.cookpage.repository.IngredientRepository;
 import startspring2.com.example.cookpage.repository.RecipeRepository;
 import startspring2.com.example.cookpage.service.dto.AmountOfIngredientsDto;
 import startspring2.com.example.cookpage.service.dto.IngredientDto;
@@ -24,6 +25,8 @@ public class AmountOfIngredientsService {
     private AmountOfIngredientsDtoMapper amountOfIngredientsDtoMapper;
     @Autowired
     private RecipeRepository recipeRepository;
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     @Transactional
     public List<AmountOfIngredientsDto> amountForRecipe(Integer recipeId) {
@@ -37,20 +40,25 @@ public class AmountOfIngredientsService {
     }
 
     @Transactional
-    public List<AmountOfIngredientsDto> getAmountByIngredient(Integer idA, Integer idB, Integer idC) throws BadRequestException {
-        if (idA == null || idC != null && idB == null) {
-            throw new BadRequestException();
+    public List<AmountOfIngredientsDto> getAmountByIngredient(String ingredientAName, String ingredientBName, String ingredientCName) throws BadRequestException {
+        if (ingredientAName.isEmpty() && !ingredientBName.isEmpty()) {
+            ingredientAName = ingredientBName;
+        } else if (ingredientAName.isEmpty() && !ingredientCName.isEmpty()) {
+            ingredientAName = ingredientCName;
+        } else if (ingredientBName.isEmpty() && !ingredientCName.isEmpty()) {
+            ingredientBName = ingredientCName;
         }
+        Integer idA = ingredientRepository.findIngredientByName(ingredientAName).getId();
         List<AmountOfIngredients> amountA = amountOfIngredientsRepository.findAmountOfIngredientsByIngredientId(idA);
         List<Recipe> recipeListA = new ArrayList<>();
         List<AmountOfIngredientsDto> amountABC = new ArrayList<>();
         List<Recipe> recipeIdListAB = new ArrayList<>();
-        if (idB == null) {
+        if (ingredientBName.isEmpty()) {
             for (AmountOfIngredients amount : amountA) {
                 amountABC.add(amountOfIngredientsDtoMapper.toDto(amount));
             }
-//            return amountABC;
         } else {
+            Integer idB = ingredientRepository.findIngredientByName(ingredientBName).getId();
             for (AmountOfIngredients amount : amountA) {
                 recipeListA.add(amount.getRecipe());
             }
@@ -63,7 +71,8 @@ public class AmountOfIngredientsService {
                     }
                 }
             }
-            if (idC != null) {
+            if (!ingredientCName.isEmpty()) {
+                Integer idC = ingredientRepository.findIngredientByName(ingredientCName).getId();
                 amountABC = new ArrayList<>();
                 for (Recipe recipeAB : recipeIdListAB) {
                     List<AmountOfIngredientsDto> amountRecipeAB = amountForRecipe(recipeAB.getId());

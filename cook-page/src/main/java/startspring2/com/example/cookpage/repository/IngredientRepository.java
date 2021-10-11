@@ -8,4 +8,5 @@ import startspring2.com.example.cookpage.model.Ingredient;
 public interface IngredientRepository extends JpaRepository<Ingredient, Integer> {
 
     Ingredient findIngredientById(Integer id);
+    Ingredient findIngredientByName(String name);
 }

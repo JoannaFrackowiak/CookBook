@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Search></title>
+    <title>Search</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
-<h1>Search by:</h1>
-<a href="/search-by-name">name</a>
-<a href="/search-by-type">type</a>
-<a href="/search-by-level">level</a>
-<a href="/search-by-time">time</a>
-<a href="/search-by-ingredient">ingredients</a>
-
+<div th:replace="layout :: header"></div>
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">
+        <p>Search by:</p>
+        <a href="/search-by-name">name</a>
+        <br/>
+        <a href="/search-by-ingredient">ingredients</a>
+        <br/>
+        <a href="/search-by-type">type, level or/and time</a>
+    </div>
+</div>
+<div th:replace="layout :: footer"></div>
 </body>
 </html>
