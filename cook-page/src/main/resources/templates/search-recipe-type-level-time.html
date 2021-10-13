@@ -3,36 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Search</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
-<h1>Search:</h1>
-<form th:action="@{/selected-recipes}">
-    <label>
-        Type:
-        <input type="text" th:name="typeRecipe" list="typesList">
-        <datalist id="typesList">
-            <option th:value="${type.name}" th:each="type : ${types}" th:text="${type.name}"></option>
-        </datalist>
-    </label>
-<br/>
-    <br/>
-    <label>Level:</label>
-    <div th:each="level : ${levels}">
-        <label>
-            <input type="radio" th:name="levelRecipe" th:value="${level}" th:text="${level.displayName}">
-        </label>
-    </div>
-<br/>
-    <label>
-        Time:
+<div th:replace="layout :: header"></div>
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">
+        <p>Search by*:</p>
         <br/>
-        <input type="radio" th:name="timeRecipe" value="20">20 minutes or less<br>
-        <input type="radio" th:name="timeRecipe" value="60">60 minutes or less<br>
-        <input type="radio" th:name="timeRecipe" value="61">more than 60 minutes<br>
-    </label>
-
-
-    <input type="submit" value="Search">
-</form>
+        <br/>
+        <form th:action="@{/selected-recipes}">
+            <div>
+                <label>type:</label>
+            </div>
+            <div>
+                <label>
+                    <input type="text" th:name="typeRecipe" list="typesList">
+                </label>
+                <datalist id="typesList">
+                    <option th:value="${type.name}" th:each="type : ${types}" th:text="${type.name}"></option>
+                </datalist>
+            </div>
+            <br/>
+            <div>
+                <label>level:</label>
+            </div>
+            <div>
+                <label th:each="level : ${levels}">
+                    <input type="radio" th:name="levelRecipe" th:value="${level}" th:text="${level.displayName}">
+                </label>
+            </div>
+            <br/>
+            <div>
+                <label>time:</label>
+            </div>
+            <div>
+                <label>
+                    <input type="radio" th:name="timeRecipe" value="20">
+                </label>20 minutes or less<br>
+                <label>
+                    <input type="radio" th:name="timeRecipe" value="60">
+                </label>60 minutes or less<br>
+                <label>
+                    <input type="radio" th:name="timeRecipe" value="61">
+                </label>more than 60 minutes<br>
+            </div>
+            <br/>
+            <div>
+                <input type="submit" value="Search">
+            </div>
+        </form>
+        <br/>
+        <div>
+            <label>* You can choose only one parameter or all.</label>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: footer"></div>
 </body>
 </html>

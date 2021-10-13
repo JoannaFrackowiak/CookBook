@@ -3,33 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Add ingredient</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
-<h1>Add a new ingredient</h1>
-
-<form action="#" th:action="@{/add-ingredient}" th:object="${createUpdateIngredientDto}" method="post">
-    Name:
-    <input type="text" th:field="*{name}"/>
-    <br/>
-    Unit:
-    <select name="unit" th:field="*{unit}">
-            <option th:each="unit : ${units}"
-                    th:value="${unit}" th:text="${unit}"></option>
-    </select>
-    <br/>
-    Type:
-    <select th:field="*{typeOfIngredientsId}">
-        <option th:value="${typesOfIngredients.id}" th:each="typesOfIngredients:${typesList}" th:text="${typesOfIngredients.name}"></option>
-    </select>
-    <br/>
-    Description:
-    <br/>
-    <label>
-        <textarea name="description" rows="5" cols="20" th:field="*{description}"></textarea>
-    </label>
-    <br/>
-
-    <input type="submit" value="submit"/>
-</form>
+<div th:replace="layout :: header"></div>
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">
+        <p>Add a new ingredient</p>
+        <form action="#" th:action="@{/add-ingredient}" th:object="${createUpdateIngredientDto}" method="post">
+            <div>
+                <label>Name:</label>
+            </div>
+            <div>
+                <label>
+                    <input type="text" th:field="*{name}"/>
+                </label>
+            </div>
+            <div>
+                <label>Unit:</label>
+            </div>
+            <div>
+                <label>
+                    <select name="unit" th:field="*{unit}">
+                        <option th:each="unit : ${units}"
+                                th:value="${unit}" th:text="${unit}"></option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>Type:</label>
+            </div>
+            <div>
+                <label>
+                    <select th:field="*{typeOfIngredientsId}">
+                        <option th:value="${typesOfIngredients.id}" th:each="typesOfIngredients:${typesList}"
+                                th:text="${typesOfIngredients.name}"></option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>Description:</label>
+            </div>
+            <div>
+                <label>
+                    <textarea name="description" rows="5" cols="20" th:field="*{description}"></textarea>
+                </label>
+            </div>
+            <div>
+                <input type="submit" value="submit"/>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:replace="layout :: footer"></div>
 </body>
 </html>
