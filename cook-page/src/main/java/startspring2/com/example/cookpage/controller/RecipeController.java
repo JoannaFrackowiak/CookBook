@@ -38,7 +38,7 @@ public class RecipeController {
     }
 
     @PutMapping("/{id}")
-    public RecipeDto updateRecipe(@RequestBody CreateUpdateRecipeDto recipe, @PathVariable Integer id) throws NotFoundException {
+    public RecipeDto updateRecipe(@RequestBody CreateUpdateRecipeDto recipe, @PathVariable Integer id) throws NotFoundException, BadRequestException, AlreadyExistsException {
         return recipeService.updateRecipe(recipe, id);
     }
 

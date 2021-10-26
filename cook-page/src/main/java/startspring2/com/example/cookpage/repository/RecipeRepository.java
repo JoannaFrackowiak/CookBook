@@ -21,6 +21,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
     List<Recipe> findRecipesByType_NameAndTimeIsLessThanEqual(String typeName, Integer time);
     List<Recipe> findRecipesByLevelAndType_NameAndTimeIsLessThanEqual(RecipeLevel level, String typeName, Integer time);
     List<Recipe> findRecipesByLevelAndType_NameAndTimeIsGreaterThanEqual(RecipeLevel level, String typeName, Integer time);
-
+    Recipe findRecipeByName(String name);
 
 }

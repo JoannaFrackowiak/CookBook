@@ -86,13 +86,17 @@ public class RecipeViewController {
     }
 
     @GetMapping("/new-recipe")
-    public ModelAndView displayCreateRecipe(@RequestParam(name = "howMany") Integer quantity) {
+    public ModelAndView displayCreateRecipe(@RequestParam(name = "howMany") Integer quantity) throws BadRequestException {
         ModelAndView modelAndView = new ModelAndView("add-recipe");
         CreateUpdateRecipeDto createUpdateRecipeDto = new CreateUpdateRecipeDto();
         modelAndView.addObject("createUpdateRecipeDto", createUpdateRecipeDto);
         modelAndView.addObject("typesList", typesOfRecipesService.getAllTypes());
         modelAndView.addObject("ingredients", ingredientService.showAllIngredients());
         modelAndView.addObject("levels", RecipeLevel.values());
+
+        if (quantity == null || quantity.equals(0)) {
+            throw new BadRequestException();
+        }
 
         for (int i = 0; i < quantity; i++) {
             createUpdateRecipeDto.addAmount(new AmountOfIngredientsDto());
@@ -122,7 +126,7 @@ public class RecipeViewController {
 
     @PostMapping("/edit-recipe")
     public String updateRecipe(@ModelAttribute CreateUpdateRecipeDto createUpdateRecipeDto,
-                               @RequestParam(name = "recipeId") Integer id) throws NotFoundException {
+                               @RequestParam(name = "recipeId") Integer id) throws NotFoundException, BadRequestException, AlreadyExistsException {
         RecipeDto recipeDto = recipeService.updateRecipe(createUpdateRecipeDto, id);
         return "redirect:/the-recipe?id=" + id;
     }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
+import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.model.TypesOfIngredients;
 import startspring2.com.example.cookpage.model.Unit;
 import startspring2.com.example.cookpage.service.IngredientService;
@@ -33,7 +34,7 @@ public class IngredientViewController {
     }
 
     @PostMapping("/add-ingredient")
-    public String createIngredient(@ModelAttribute CreateUpdateIngredientDto createUpdateIngredientDto) throws AlreadyExistsException {
+    public String createIngredient(@ModelAttribute CreateUpdateIngredientDto createUpdateIngredientDto) throws AlreadyExistsException, BadRequestException {
         IngredientDto ingredientDto = ingredientService.addNewIngredient(createUpdateIngredientDto);
         return "redirect:/home-page";
     }

@@ -15,7 +15,6 @@ import startspring2.com.example.cookpage.repository.TypesOfRecipesRepository;
 import startspring2.com.example.cookpage.service.dto.AmountOfIngredientsDto;
 import startspring2.com.example.cookpage.service.dto.CreateUpdateRecipeDto;
 import startspring2.com.example.cookpage.service.dto.RecipeDto;
-import startspring2.com.example.cookpage.service.dto.TypesOfRecipesDto;
 import startspring2.com.example.cookpage.service.mapper.AmountOfIngredientsDtoMapper;
 import startspring2.com.example.cookpage.service.mapper.RecipeDtoMapper;
 
@@ -35,8 +34,6 @@ public class RecipeService {
     private TypesOfRecipesRepository typesOfRecipesRepository;
     @Autowired
     private AmountOfIngredientsDtoMapper amountOfIngredientsDtoMapper;
-    @Autowired
-    private TypesOfRecipesService typesOfRecipesService;
 
     @Transactional
     public List<RecipeDto> showAllRecipes() {
@@ -127,6 +124,10 @@ public class RecipeService {
                 throw new AlreadyExistsException();
             }
         }
+        if (recipe.getName().isEmpty() || recipe.getTime() == null || recipe.getTime() == 0 || recipe.getDetails().isEmpty()) {
+            throw new BadRequestException();
+        }
+
         Recipe newRecipe = recipeDtoMapper.fromDto(recipe);
         Recipe savedRecipe = recipeRepository.save(newRecipe);
         List<AmountOfIngredientsDto> amountOfIngredientsDtoList = amountOfIngredientsService.newAmountOfIngredients(savedRecipe.getId(), recipe.getIngredientsWithAmount());
@@ -135,12 +136,20 @@ public class RecipeService {
     }
 
     @Transactional
-    public RecipeDto updateRecipe(CreateUpdateRecipeDto recipe, int id) throws NotFoundException {
+    public RecipeDto updateRecipe(CreateUpdateRecipeDto recipe, int id) throws NotFoundException, BadRequestException, AlreadyExistsException {
         Recipe existingRecipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException());
 
         TypesOfRecipes typesOfRecipes = typesOfRecipesRepository.findById(recipe.getTypeOfRecipeId())
                 .orElseThrow(() -> new NotFoundException());
+
+        if (recipe.getName().isEmpty() || recipe.getTime() == null || recipe.getTime() == 0 || recipe.getDetails().isEmpty()) {
+            throw new BadRequestException();
+        }
+
+        if (recipeRepository.findRecipeByName(recipe.getName()) != null) {
+            throw new AlreadyExistsException();
+        }
 
         existingRecipe.setName(recipe.getName());
         existingRecipe.setTime(recipe.getTime());
