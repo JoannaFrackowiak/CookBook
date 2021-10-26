@@ -1,26 +1,20 @@
-package startspring2.com.example.cookpage.model;
+package startspring2.com.example.cookpage.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-
+import startspring2.com.example.cookpage.model.Unit;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class Ingredient {
+public class IngredientDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
     private Unit unit;
-    @ManyToOne
-    private TypesOfIngredients type;
+    private Integer typeOfIngredientId;
     private String description;
 }

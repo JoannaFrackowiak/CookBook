@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">
+        <p>Search by:</p>
+        <br/>
+        <form th:action="@{/recipes-with-the-ingredient}">
+            <div>
+                <label>ingredient*:</label>
+                <label>
+                    <input th:name="ingredientAName" list="ingredientsA">
+                </label>
+                <datalist id="ingredientsA">
+                    <option th:value="${ingredient.name}" th:each="ingredient:${ingredients}"
+                            th:text="${ingredient.name}"></option>
+                </datalist>
+                <label>
+                    <input th:name="ingredientBName" list="ingredientsB">
+                </label>
+                <datalist id="ingredientsB">
+                    <option th:value="${ingredient.name}" th:each="ingredient:${ingredients}"
+                            th:text="${ingredient.name}"></option>
+                </datalist>
+                <label>
+                    <input th:name="ingredientCName" list="ingredientsC">
+                </label>
+                <datalist id="ingredientsC">
+                    <option th:value="${ingredient.name}" th:each="ingredient:${ingredients}"
+                            th:text="${ingredient.name}"></option>
+                </datalist>
+            </div>
+            <div>
+                <input type="submit" value="Search">
+            </div>
+        </form>
+        <br/>
+        <div>
+            <label>* You can search recipes by only one ingredient or two or three.</label>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

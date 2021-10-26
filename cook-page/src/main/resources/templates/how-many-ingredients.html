@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>How many</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">
+        <form th:action="@{/new-recipe}">
+            <div>
+                <label>How many ingredients does your recipe have?</label>
+            </div>
+            <div>
+                <label>
+                    <input type="text" th:name="howMany">
+                </label>
+            </div>
+            <div>
+                <label>Are you sure? Later you cannot change the answer. You must delete recipe and add it
+                    again.</label>
+            </div>
+            <div>
+                <input type="submit" value="Yes, I'm sure.">
+            </div>
+        </form>
+    </div>
+</div>
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

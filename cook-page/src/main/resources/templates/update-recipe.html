@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Recipe</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">
+        <p>
+            <label>Update:</label>
+            <span th:text="${updateRecipe.name}"></span>
+        </p>
+        <form action="#" th:action="@{/edit-recipe}" th:object="${updateRecipe}" method="post">
+            <div>
+                <input type="hidden" th:value="${recipeId}" name="recipeId"/>
+            </div>
+            <div>
+                <label>Name:</label>
+                <label>
+                    <input type="text" th:field="*{name}" name="name"/>
+                </label>
+            </div>
+            <div>
+                <label>Type:</label>
+                <label>
+                    <select th:field="*{typeOfRecipeId}">
+                        <option th:value="${typesOfRecipe.id}" th:each="typesOfRecipe : ${typeRecipe}"
+                                th:text="${typesOfRecipe.name}"></option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>Level:</label>
+                <label>
+                    <select name="level" th:field="*{level}">
+                        <option th:each="level : ${levels}"
+                                th:value="${level}" th:text="${level.displayName}"></option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>Time:</label>
+                <label>
+                    <input type="text" th:field="*{time}" name="time"/>
+                </label>
+                <label>min</label>
+            </div>
+            <br/>
+            <div>
+                <label>Ingredients:</label>
+                <table>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Unit Ingredient</th>
+                    </tr>
+                    <tr th:each="amountDto, itemStat : *{ingredientsWithAmount}">
+                        <td>
+                            <label>
+                                <input th:field="*{ingredientsWithAmount[__${itemStat.index}__].amount}">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <select th:field="*{ingredientsWithAmount[__${itemStat.index}__].ingredientId}">
+                                    <option th:value="${ingredient.id}" th:each="ingredient : ${ingredients}"
+                                            th:text="${ingredient.unit.displayName + ', ' + ingredient.name}"></option>
+                                </select>
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br/>
+            <div>
+                <label>Details:</label>
+            </div>
+            <div>
+                <label>
+                    <textarea name="details" rows="10" cols="30" th:field="*{details}"></textarea>
+                </label>
+            </div>
+            <input type="submit" value="submit"/>
+        </form>
+    </div>
+</div>
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

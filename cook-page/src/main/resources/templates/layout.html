@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+<div th:fragment="header" id="header">
+    Your RECIPES
+</div>
+
+<div th:fragment="menu" id="menu">
+    <a href="/home-page">Home page</a><br/>
+    <a href="/all-recipes">Recipes list</a><br/>
+    <a href="/search">Search for a recipe</a><br/>
+    <a href="/add-new-recipe">Add a new recipe</a><br/>
+    <a href="/add-ingredient">Add a new ingredient</a><br/>
+</div>
+
+<div th:fragment="footer" id="footer">
+    <i>Author: Joanna</i>
+</div>
+
+</body>
+</html>
