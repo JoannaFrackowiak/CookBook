@@ -1,38 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${recipe.name}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
-<h1 th:text="${recipe.name}"></h1>
-<br/>
-Type:
-<span th:text="${type.name}"></span>
-<br/>
-Time:
-<span th:text="${recipe.time}"></span>
-<br/>
-Level:
-<span th:text="${recipe.level}"></span>
-<br/>
-<table>
-    <tr>
-        <th>amount</th>
-        <th>unit</th>
-        <th>ingredient</th>
-    </tr>
-    <tr th:each="element : ${ingredients}">
-        <td th:text="${element.value}"></td>
-        <td th:text="${element.key.unit.displayName}"></td>
-        <td th:text="${element.key.name}"></td>
-    </tr>
-</table>
-
-<span th:text="${recipe.details}"></span>
-<br/>
-
-<a href="/all-recipes">Back to The Recipes List</a>
-
+<div th:replace="layout :: header"></div>
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">
+        <h1 th:text="${recipe.name}"></h1>
+        <div>
+            <label>Type:</label>
+            <span th:text="${type.name}"></span>
+        </div>
+        <div>
+            <label>Time:</label>
+            <span th:text="${recipe.time}"></span>
+            <label> min</label>
+        </div>
+        <div>
+            <label>Level:</label>
+            <span th:text="${recipe.level.displayName}"></span>
+        </div>
+        <p>
+            <table>
+                <tr>
+                    <th>Amount</th>
+                    <th>Unit</th>
+                    <th>Ingredient</th>
+                </tr>
+                <tr th:each="element : ${ingredients}">
+                    <td th:text="${element.value}"></td>
+                    <td th:text="${element.key.unit.displayName}"></td>
+                    <td th:text="${element.key.name}"></td>
+                </tr>
+            </table>
+        </p>
+        <hr/>
+        <div>
+            <span th:text="${recipe.details}"></span>
+        </div>
+        <p>
+            <a th:href="'/edit-recipe?recipeId=' + ${recipe.id}">Edit</a>
+            <a th:href="'/delete-recipe?recipeId=' + ${recipe.id}">Delete</a>
+        </p>
+    </div>
+</div>
+<div th:replace="layout :: footer"></div>
 </body>
 </html>

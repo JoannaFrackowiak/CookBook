@@ -1,6 +1,5 @@
 package startspring2.com.example.cookpage.view;
 
-import io.swagger.models.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,21 +7,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
 import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.controller.exception.NotFoundException;
-import startspring2.com.example.cookpage.model.Recipe;
 import startspring2.com.example.cookpage.model.RecipeLevel;
-import startspring2.com.example.cookpage.repository.RecipeRepository;
 import startspring2.com.example.cookpage.service.AmountOfIngredientsService;
 import startspring2.com.example.cookpage.service.IngredientService;
 import startspring2.com.example.cookpage.service.RecipeService;
 import startspring2.com.example.cookpage.service.TypesOfRecipesService;
 import startspring2.com.example.cookpage.service.dto.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -36,33 +30,46 @@ public class RecipeViewController {
     private TypesOfRecipesService typesOfRecipesService;
     @Autowired
     private AmountOfIngredientsService amountOfIngredientsService;
-    @Autowired
-    private RecipeRepository recipeRepository;
 
-    @GetMapping("/all-recipes")
-    public ModelAndView recipeList(@RequestParam(name = "levelRecipe", required = false) RecipeLevel level,
-                                   @RequestParam(name = "typeRecipe", required = false) String typeName,
-                                   @RequestParam(name = "timeRecipe", required = false) Integer time)
-            throws NotFoundException {
+    @GetMapping("/selected-recipes")
+    public ModelAndView selectedRecipeList(@RequestParam(name = "levelRecipe", required = false) RecipeLevel level,
+                                           @RequestParam(name = "typeRecipe", required = false) String typeName,
+                                           @RequestParam(name = "timeRecipe", required = false) Integer time)
+            throws NotFoundException, BadRequestException {
         ModelAndView modelAndView = new ModelAndView("recipe-list");
-        if (level != null) {
+        if (level != null && time != null && !typeName.isEmpty()) {
+            modelAndView.addObject("recipeList", recipeService.showRecipeByTimeAndLevelAndType(time, level, typeName));
+        } else if (level != null && time != null) {
+            modelAndView.addObject("recipeList", recipeService.showRecipeByLevelAndTime(level, time));
+        } else if (level != null && !typeName.isEmpty()) {
+            modelAndView.addObject("recipeList", recipeService.showRecipeByLevelAndType(level, typeName));
+        } else if (level != null) {
             modelAndView.addObject("recipeList", recipeService.showRecipeByLevel(level));
-        } else if (typeName != null) {
+        } else if (!typeName.isEmpty() && time != null) {
+            modelAndView.addObject("recipeList", recipeService.showRecipeByTimeAndType(time, typeName));
+        } else if (!typeName.isEmpty()) {
             modelAndView.addObject("recipeList", recipeService.showRecipeByType(typeName));
         } else if (time != null) {
             modelAndView.addObject("recipeList", recipeService.showRecipeByTime(time));
         } else {
-            modelAndView.addObject("recipeList", recipeService.showAllRecipes());
+            throw new BadRequestException();
         }
         return modelAndView;
     }
 
-    @GetMapping("/recipes-with-the-ingredient")
-    public ModelAndView recipeListByIngredient(@RequestParam(name = "ingredientIdA") Integer idA,
-                                               @RequestParam(name = "ingredientIdB", required = false) Integer idB,
-                                               @RequestParam(name = "ingredientIdC", required = false) Integer idC) throws BadRequestException {
+    @GetMapping("/all-recipes")
+    public ModelAndView allRecipeList() {
         ModelAndView modelAndView = new ModelAndView("recipe-list");
-        modelAndView.addObject("recipeList", recipeService.showRecipeByIngredient(amountOfIngredientsService.getAmountByIngredient(idA, idB, idC)));
+        modelAndView.addObject("recipeList", recipeService.showAllRecipes());
+        return modelAndView;
+    }
+
+    @GetMapping("/recipes-with-the-ingredient")
+    public ModelAndView recipeListByIngredient(@RequestParam(name = "ingredientAName") String nameA,
+                                               @RequestParam(name = "ingredientBName", required = false) String nameB,
+                                               @RequestParam(name = "ingredientCName", required = false) String idC) throws BadRequestException {
+        ModelAndView modelAndView = new ModelAndView("recipe-list");
+        modelAndView.addObject("recipeList", recipeService.showRecipeByIngredient(amountOfIngredientsService.getAmountByIngredient(nameA, nameB, idC)));
         return modelAndView;
     }
 
@@ -79,11 +86,17 @@ public class RecipeViewController {
     }
 
     @GetMapping("/new-recipe")
-    public ModelAndView displayCreateRecipe(@RequestParam(name = "howMany") Integer quantity) {
+    public ModelAndView displayCreateRecipe(@RequestParam(name = "howMany") Integer quantity) throws BadRequestException {
         ModelAndView modelAndView = new ModelAndView("add-recipe");
         CreateUpdateRecipeDto createUpdateRecipeDto = new CreateUpdateRecipeDto();
         modelAndView.addObject("createUpdateRecipeDto", createUpdateRecipeDto);
         modelAndView.addObject("typesList", typesOfRecipesService.getAllTypes());
+        modelAndView.addObject("ingredients", ingredientService.showAllIngredients());
+        modelAndView.addObject("levels", RecipeLevel.values());
+
+        if (quantity == null || quantity.equals(0)) {
+            throw new BadRequestException();
+        }
 
         for (int i = 0; i < quantity; i++) {
             createUpdateRecipeDto.addAmount(new AmountOfIngredientsDto());
@@ -99,22 +112,29 @@ public class RecipeViewController {
 
     @GetMapping("/edit-recipe")
     public ModelAndView displayUpdateRecipe(@RequestParam(name = "recipeId") Integer id) throws NotFoundException {
-    ModelAndView modelAndView = new ModelAndView("update-recipe");
-    modelAndView.addObject("typeRecipe", typesOfRecipesService.getAllTypes());
-    RecipeDto recipe = recipeService.showRecipeById(id);
-//    modelAndView.addObject("recipe", recipe);
-    modelAndView.addObject("updateRecipe",
-            new CreateUpdateRecipeDto(recipe.getName(), recipe.getTime(), recipe.getLevel(),
-                    recipe.getTypeOfRecipeId(), recipe.getDetails(), amountOfIngredientsService.amountForRecipe(id)));
-    modelAndView.addObject("recipeId", id);
-    return modelAndView;
+        ModelAndView modelAndView = new ModelAndView("update-recipe");
+        modelAndView.addObject("typeRecipe", typesOfRecipesService.getAllTypes());
+        RecipeDto recipe = recipeService.showRecipeById(id);
+        modelAndView.addObject("levels", RecipeLevel.values());
+        modelAndView.addObject("ingredients", ingredientService.showAllIngredients());
+        modelAndView.addObject("updateRecipe",
+                new CreateUpdateRecipeDto(recipe.getName(), recipe.getTime(), recipe.getLevel(),
+                        recipe.getTypeOfRecipeId(), recipe.getDetails(), amountOfIngredientsService.amountForRecipe(id)));
+        modelAndView.addObject("recipeId", id);
+        return modelAndView;
     }
 
     @PostMapping("/edit-recipe")
     public String updateRecipe(@ModelAttribute CreateUpdateRecipeDto createUpdateRecipeDto,
-                               @RequestParam(name = "recipeId") Integer id) throws NotFoundException {
+                               @RequestParam(name = "recipeId") Integer id) throws NotFoundException, BadRequestException, AlreadyExistsException {
         RecipeDto recipeDto = recipeService.updateRecipe(createUpdateRecipeDto, id);
         return "redirect:/the-recipe?id=" + id;
+    }
+
+    @GetMapping("/delete-recipe")
+    public String deleteRecipe(@RequestParam(name = "recipeId") Integer id) throws NotFoundException {
+        recipeService.deleteRecipe(id);
+        return "redirect:/home-page";
     }
 
     @GetMapping("/search")
@@ -136,23 +156,12 @@ public class RecipeViewController {
         return modelAndView;
     }
 
-    @GetMapping("/search-by-level")
-    public ModelAndView searchRecipeByLevel() {
-        ModelAndView modelAndView = new ModelAndView("search-recipe-level");
-        modelAndView.addObject("levels", RecipeLevel.values());
-        return modelAndView;
-    }
-
     @GetMapping("/search-by-type")
     public ModelAndView searchRecipeByType() {
-        ModelAndView modelAndView = new ModelAndView("search-recipe-type");
+        ModelAndView modelAndView = new ModelAndView("search-recipe-type-level-time");
         modelAndView.addObject("types", typesOfRecipesService.getAllTypes());
+        modelAndView.addObject("levels", RecipeLevel.values());
         return modelAndView;
-    }
-
-    @GetMapping("/search-by-time")
-    public String searchRecipeByTime() {
-        return "search-recipe-time";
     }
 
     @GetMapping("/add-new-recipe")

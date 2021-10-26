@@ -3,26 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Search</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
-<h1>Search:</h1>
-<form th:action="@{/the-recipe}">
-    <label>
-        Name:
-        <select th:name="id">
-            <option th:value="${recipe.id}" th:each="recipe:${recipes}" th:text="${recipe.name}"></option>
-        </select>
-    </label>
-
-<!--    <label>-->
-<!--        Name:-->
-<!--        <input th:name="id" list="recipes">-->
-<!--        <datalist id="recipes">-->
-<!--            <option th:value="${recipe.id}" th:each="recipe:${recipes}" th:text="${recipe.name}"></option>-->
-<!--        </datalist>-->
-<!--    </label>-->
-
-    <input type="submit" value="Search">
-</form>
+<div th:replace="layout :: header"></div>
+<div id="background">
+    <div th:replace="layout :: menu"></div>
+    <div id="content">
+        <p>Search by:</p>
+        <form th:action="@{/the-recipe}">
+            <div>
+                <label>name:</label>
+                <label>
+                    <input th:name="id" list="recipes">
+                    <datalist id="recipes">
+                        <option th:value="${recipe.id}" th:each="recipe:${recipes}" th:text="${recipe.name}"></option>
+                    </datalist>
+                </label>
+            </div>
+            <div>
+            <input type="submit" value="Search">
+            </div>
+        </form>
+    </div>
+</div>
+<div th:replace="layout :: footer"></div>
 </body>
 </html>
+
+<!--<select th:name="id">-->
+<!--    <option th:value="${recipe.id}" th:each="recipe:${recipes}" th:text="${recipe.name}"></option>-->
+<!--</select>-->
+
+
+

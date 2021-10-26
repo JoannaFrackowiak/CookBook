@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import startspring2.com.example.cookpage.controller.exception.AlreadyExistsException;
+import startspring2.com.example.cookpage.controller.exception.BadRequestException;
 import startspring2.com.example.cookpage.model.Ingredient;
 import startspring2.com.example.cookpage.repository.IngredientRepository;
 import startspring2.com.example.cookpage.service.dto.AmountOfIngredientsDto;
@@ -51,12 +52,15 @@ public class IngredientService {
         return ingredientsWithAmount;
     }
 
-    public IngredientDto addNewIngredient(CreateUpdateIngredientDto createUpdateIngredientDto) throws AlreadyExistsException {
+    public IngredientDto addNewIngredient(CreateUpdateIngredientDto createUpdateIngredientDto) throws AlreadyExistsException, BadRequestException {
         List<Ingredient> ingredientsList = ingredientRepository.findAll();
         for (Ingredient ingredient : ingredientsList) {
             if (ingredient.getName().equals(createUpdateIngredientDto.getName())) {
                 throw new AlreadyExistsException();
             }
+        }
+        if (createUpdateIngredientDto.getName().isEmpty() || createUpdateIngredientDto.getDescription().isEmpty()) {
+            throw new BadRequestException();
         }
         Ingredient newIngredient = ingredientDtoMapper.fromDto(createUpdateIngredientDto);
         Ingredient savedIngredient = ingredientRepository.save(newIngredient);
