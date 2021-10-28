@@ -1,5 +1,5 @@
 # Cookbook
-This is a simple Web application. I used Spring Boot, Hibernate, HTML and CSS. I learned basic git commands when I create this application also.
+This is a simple Web application. I used Spring Boot, Hibernate, HTML and CSS. I learned basic Git commands when I create this application also.
 
 The app allows you:
  - add, edit and deleted your recipes,
